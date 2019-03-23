@@ -11,8 +11,9 @@ class InteractiveRecord
     DB[:conn].results_as_hash = true
     sql = "PRAGMA table_info('#{table_name}')"
     table_info = DB[:conn].execute(sql)
-    result = table_info.each {|element| element["name"]}
-    result.compact #Gets rid of nulls
+    arr = []
+    table_info.each {|element| arr << element["name"]}
+    arr.compact #Gets rid of nulls
   end
 
   def initialize(hash = {})
