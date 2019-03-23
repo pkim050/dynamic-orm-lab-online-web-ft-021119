@@ -42,14 +42,12 @@ class InteractiveRecord
   end
 
   def self.find_by_name(name)
-    sql = "SELECT * FROM #{self.table_name} WHERE name = '#{name}'"
-    DB[:conn].execute(sql)
+    sql = "SELECT * FROM #{self.table_name} WHERE name = (?)"
+    DB[:conn].execute(sql, name)
   end
 
   def self.find_by(attribute)
-    attribute_key = attribute.keys[0].to_s
-    attribute_value = attribute.values[0]
-    sql = "SELECT * FROM #{self.table_name} WHERE #{attribute_key} = #{attribute_value}"
-    DB[:conn].execute(sql)
+    sql = "SELECT * FROM #{self.table_name} WHERE #{attribute.keys.first.to_s} = (?)"
+    DB[:conn].execute(sql, attribute.values.first)
   end
 end
